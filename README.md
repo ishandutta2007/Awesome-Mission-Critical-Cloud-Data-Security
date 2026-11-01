@@ -1,233 +1,163 @@
-# Awesome-Mission-Critical-Cloud-Data-Security
-
-## Top Mission-Critical Cloud Data Security Ecosystem
-
-
-
-**Curated List of SaaS Products & Open-Source GitHub Projects**  
-
-*Focused on Secrets Management, Privileged Access & Self-Hosted Cloud Security Posture*  
-
-**Last updated: November 2026**
-
-
-
-This repository tracks notable **SaaS platforms** and **open-source projects** for **Mission-Critical Cloud Data Security**. These tools enable organizations to protect the crown jewels—encryption keys, privileged credentials, sensitive data stores, and cloud configurations—with the controls, auditability, and resilience that regulated and high-stakes environments demand.
-
-
-
-**Examples** include Snowflake Business Critical Edition, AWS Key Management Service, HashiCorp Vault Cloud, CyberArk Privileged Cloud, Vanta, Drata, TrustArc, OneTrust, BigID, and Imperva Data Security (the category leaders).
-
-
-
-**Open-source emphasis**: Mission-Critical Cloud Data Security is a domain where open-source tooling is **genuinely capable but requires assembly across distinct security layers**. The strongest active projects are **JumpServer** (a mature, GPLv3-licensed Privileged Access Management platform for SSH, RDP, Kubernetes, and databases via browser) and **Secrets** (a lightweight MIT-licensed secrets manager with envelope encryption, transit encryption, and audit logs, explicitly inspired by Vault but intentionally simpler). For cloud security posture, **Mantissa Stance** provides an open-source CSPM/DSPM/CIEM combination with 300+ policies and attack path analysis, and **Poirot DSPM** detects sensitive data across MySQL, S3, Kafka, and cloud drives with TheHive integration. The critical caveat: **no open-source project matches the integrated breadth** of Vanta's compliance automation or CyberArk's enterprise PAM—open-source tools address specific layers (secrets, PAM, posture, data discovery) and require you to own the integration and operational responsibility.
-
-
-
-Contributions welcome! Open a PR to add/update entries. Keep descriptions factual and link to official sites.
-
-
-
-## Table of Contents
-
-- [SaaS/Hosted Platforms](#saas-products)
-
-- [Open-Source GitHub Projects](#open-source-github-projects)
-
-- [How to Contribute](#how-to-contribute)
-
-- [Disclaimer](#disclaimer)
-
-
-
-## SaaS/Hosted Platforms
-
-
-
-- **[Snowflake Business Critical Edition](https://www.snowflake.com/)**  
-
-  Snowflake's highest standard tier with **Tri-Secret Secure** (composite master key combining Snowflake and customer-owned key), customer-managed keys, private connectivity, and enhanced security monitoring for regulated workloads.
-
-
-
-- **[AWS Key Management Service (KMS)](https://aws.amazon.com/kms/)**  
-
-  Managed service for creating and controlling encryption keys used to protect data across AWS services and applications; integrates with CloudTrail for audit logging and supports customer-managed keys.
-
-
-
-- **[HashiCorp Vault Cloud](https://www.hashicorp.com/)**  
-
-  Managed secrets management platform for storing, accessing, and rotating secrets, credentials, and encryption keys; provides dynamic secrets, leasing, renewal, and audit devices.
-
-
-
-- **[CyberArk Privileged Cloud](https://www.cyberark.com/)**  
-
-  SaaS privileged access management with credential vaulting, session isolation, least-privilege controls, and audit trails for privileged accounts across hybrid environments.
-
-
-
-- **[Vanta](https://www.vanta.com/)**  
-
-  Compliance automation platform with continuous control monitoring, evidence collection, and trust center; supports SOC 2, ISO 27001, HIPAA, and other frameworks.
-
-
-
-- **[Drata](https://drata.com/)**  
-
-  Compliance automation with continuous monitoring, control management, and auditor workflows; positioned as a Vanta alternative.
-
-
-
-- **[TrustArc](https://trustarc.com/)**  
-
-  Privacy and compliance management platform; provides assessments, certifications, and regulatory tracking for data protection.
-
-
-
-- **[OneTrust](https://www.onetrust.com/)**  
-
-  GRC platform unifying privacy, AI governance, risk management, and third-party monitoring; trusted by 14,000+ global brands.
-
-
-
-- **[BigID](https://bigid.com/)**  
-
-  Data intelligence platform for discovery, classification, and protection of sensitive data across cloud and on-premises environments.
-
-
-
-- **[Imperva Data Security](https://www.imperva.com/)**  
-
-  Data security platform with discovery, classification, activity monitoring, and protection for databases and data stores.
-
-
-
-## Open-Source GitHub Projects
-
-
-
-### Secrets Management (Vault Alternatives)
-
-
-
-- **[Secrets](https://github.com/allisson/secrets)**  
-
-  A **lightweight, MIT-licensed secrets manager** explicitly inspired by HashiCorp Vault but intentionally simpler . Features: **envelope encryption** (Master Key → KEK → DEK → Secret Data) with key rotation; **KMS integration** for master key encryption at rest (Google Cloud KMS, AWS KMS, Azure Key Vault, HashiCorp Vault) ; **transit encryption** for encrypt/decrypt as a service; **tokenization API** with token generation, detokenization, validation, revocation, and TTL; **capability-based authorization** with path-matching policies; **cryptographic audit log signing** (HMAC-SHA256) for tamper detection, PCI DSS 10.2.2 aligned ; and **OpenTelemetry metrics** with Prometheus export. Docker-first deployment. **Best for teams wanting a simple, auditable secrets manager** without Vault's operational complexity—but it is not designed to compete with Vault's full feature set .
-
-
-
-- **[kvlt](https://github.com/retr0h/kvlt)**  
-
-  A **single-binary, local-first secrets vault** that encrypts with **age using your existing SSH keys** . Features: **no daemon, no service**—pure CLI; **named vaults** for stable call sites (`kvlt get prod API_KEY`); **multi-recipient** encryption (encrypt to N SSH public keys); **stdin/TTY input modes** to keep secrets out of shell history; shell-friendly `kvlt env` for direnv integration; and a **pluggable backend interface** (AWS Secrets Manager planned via build tags). **Security model**: delegates the lock to the SSH protection chain (passphrase + ssh-agent + Touch ID via Secretive), meaning an attacker with user-level code execution cannot decrypt without the in-memory unlock state . **Best for developers** wanting a minimal, secure vault that borrows existing SSH security—not for team-scale secrets management with centralized policy.
-
-
-
-### Privileged Access Management (PAM)
-
-
-
-- **[JumpServer](https://github.com/jumpserver/jumpserver)**  
-
-  The **leading open-source Privileged Access Management (PAM) platform** (GPLv3, ~25k GitHub stars) . Provides **on-demand, secure access to SSH, RDP, Kubernetes, Database, and RemoteApp endpoints through a web browser** . Components include Lina (Web UI), Luna (Web Terminal), KoKo (character protocol connector), Lion (graphical protocol connector), and Chen (Web DB). Quick start via `curl` script on a Linux server (4c8g minimum). **Best for organizations wanting a self-hosted PAM** with browser-based access and audit trails—but it is a substantial platform requiring proper deployment and maintenance.
-
-
-
-- **[Thand Agent](https://github.com/thand-io/agent)**  
-
-  A **distributed, open-source agent for PAM and just-in-time (JIT) access** to cloud infrastructure, SaaS applications, and local systems (BSL 1.1) . Features: **zero standing privileges**—no permanent admin access; **JIT permissions** requested when needed and revoked after; **serverless workflows via Temporal** for deterministic execution and revocation; **complete audit trail** of every request and action . Deployable via Docker, Kubernetes, AWS Lambda, or GCP Cloud Functions. **Best for organizations wanting JIT access** to eliminate standing privileges—but it is a newer project with BSL licensing (not OSI-approved) and requires integration effort.
-
-
-
-### Cloud Security Posture (CSPM/DSPM/CIEM)
-
-
-
-- **[Mantissa Stance](https://github.com/mantissa-labs/stance)**  
-
-  An **open-source CSPM, DSPM, CIEM, and vulnerability management** tool for AWS, GCP, and Azure . Features: **agentless collection** via 37 collectors; **300+ YAML policies** with CIS benchmark scoring; **DSPM** with sensitive data classification and exposure mapping; **CIEM** with effective permissions and over-privilege detection; **attack path analysis** with trust graphs, blast radius, and toxic combination detection; **natural language to SQL** querying (Claude/GPT-4/Gemini) . **Deterministic core**: all detection, policy evaluation, and risk scoring use transparent algorithmic logic—AI is only used for querying and content generation . **Best for teams wanting multi-cloud security posture** with attack path analysis—but it is a newer project and the AI querying requires API keys.
-
-
-
-- **[Poirot DSPM](https://github.com/safernandez666/poirot-public)**  
-
-  An **open-source Data Security Posture Management (DSPM)** scanner . Features: **multi-source scanning** (MySQL, S3, Apache Kafka, Google Drive, OneDrive); **sensitive data detection** (credit cards, credentials, PII) with severity classification; **TheHive 5 integration** for automatic case creation; **multi-channel notifications** (Slack, Email, Teams, Webhooks); **scheduled scans**; and **PDF/Excel/JSON reports** with AI-powered analysis via Ollama . **Best for organizations already using TheHive** wanting DSPM with incident management integration—but it is a focused scanner, not a full CSPM.
-
-
-
-### Cloud Compliance & Evidence
-
-
-
-- **[aws-compliance-as-code](https://pypi.org/project/aws-compliance-as-code/)**  
-
-  Open-source **automated compliance evidence** for AWS mapped to NIST 800-53, SOC 2, ISO 27001, and CIS AWS Foundations . Features: **control catalog** with crosswalk to multiple frameworks (test once, satisfy many); **read-only API checks** returning PASS/FAIL with raw responses; **SHA-256 hashed evidence** for tamper detection; **OSCAL 1.1.2 export** for GRC tool ingestion; and **offline testing** via moto with unit tests . **Best for AWS teams** wanting repeatable, auditable evidence without manual screenshots—but it covers only 15 controls currently (VPC flow logs and AWS Config recorder not yet implemented) .
-
-
-
-- **[compliancekit](https://pkg.go.dev/github.com/darpanzope/compliancekit)**  
-
-  Open-source **compliance and security scanner** for cloud and Linux infrastructure (Go, v0.2.0) . Generates **audit-ready evidence packs** for SOC 2, ISO 27001, and CIS benchmarks; supports DigitalOcean checks and Linux SSH collection . **Best for teams wanting a lightweight compliance scanner** for cloud and Linux—but it is early-stage (v0.2.0) with limited provider coverage.
-
-
-
-### Data Sanitization & Privacy
-
-
-
-- **[SDSA (Secure Data Sanitization App)](https://pypi.org/project/sdsa/)**  
-
-  Open-source **self-hostable tool for sanitizing tabular data** before it leaves a trusted environment . Features: **PII detection** (email, phone, card number, government ID, DOB, name, address); **per-column privacy policies** (retain, mask, hash, tokenize, redact, drop, numeric bin, date truncate, string truncate, Laplace noise); **k-anonymity enforcement** over quasi-identifiers; **preflight suppression estimates**; and **JSON/Markdown privacy reports** . **Best for teams** wanting to safely share datasets with external parties—but it is a sanitization tool, not a full data security platform.
-
-
-
-- **[CloakDB](https://pypi.org/project/cloakdb/)**  
-
-  Open-source **database anonymization** tool (Python) with **strict O(1) memory** on large dumps . Features: supports Postgres, MySQL, SQLite, Parquet, CSV, JSONL; **format-preserving encryption** (NIST SP 800-38G FF1/FF3-1); **Luhn/checksum preservation** for credit cards and SSNs; **differential privacy budget tracking**; **signed SOC2/ISO 27001 audit trails** (HMAC-SHA256); **referential integrity** with automatic multi-table mapping; and **schema drift/PII linting** . Benchmarks show ~180k-204k rows/s on 10GB-50GB datasets with ~50-68MB peak RAM . **Best for teams** needing to sanitize large database dumps for staging/development—not a runtime data security tool.
-
-
-
-**Frameworks for building custom systems**: For **secrets management**, Secrets provides a lightweight, auditable MIT-licensed Vault alternative with envelope encryption and transit APIs . For **PAM**, JumpServer provides mature, GPLv3 browser-based privileged access , while Thand offers JIT access with zero standing privileges . For **cloud security posture**, Mantissa Stance combines CSPM, DSPM, and CIEM with attack path analysis , and Poirot DSPM focuses on sensitive data discovery with TheHive integration . For **compliance evidence**, aws-compliance-as-code provides hashed, OSCAL-exportable AWS evidence . No open-source project matches the **integrated compliance automation and auditor workflows** of Vanta or Drata—those require commercial platforms or significant custom integration.
-
-
-
-## How to Contribute
-
-
-
-1. Fork the repo.
-
-2. Add/edit entries in `README.md` (follow existing format).
-
-3. Include: name, link, 1–2 sentence description, and whether it's SaaS or open-source.
-
-4. Submit PR with a short explanation.
-
-
-
-Star the repo if you find it useful!
-
-
-
-## Disclaimer
-
-
-
-- This is a **community-curated** list — not exhaustive and not an endorsement.
-
-- Mission-critical data security platforms handling encryption keys, privileged credentials, and sensitive data must comply with applicable regulations (PCI DSS, SOC 2, ISO 27001, GDPR) and organizational security policies; **self-hosted solutions place full responsibility for key management, access controls, and audit integrity on the operator**.
-
-- **Open-source mission-critical data security is capable but fragmented across layers**—Secrets provides lightweight secrets management , JumpServer provides mature PAM , Mantissa Stance provides multi-cloud posture , and aws-compliance-as-code provides AWS evidence . However, **no open-source project matches the integrated breadth and managed reliability** of Vanta (compliance automation) or CyberArk (enterprise PAM). Choose based on whether you need secrets (Secrets), privileged access (JumpServer, Thand), posture (Mantissa Stance, Poirot), or compliance evidence (aws-compliance-as-code)—and plan for integration across these layers.
-
-- Verify license terms for commercial use; Secrets uses MIT , JumpServer uses GPLv3 , Thand uses BSL 1.1 , and aws-compliance-as-code is open-source (check repository).
-
-
+# 🛡️ Awesome Mission-Critical Cloud Data Security
+
+<p align="center">
+  <img src="./assets/banner.svg" alt="Awesome Mission Critical Cloud Data Security Banner" width="100%" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a>
+  <a href="https://discord.gg/jc4xtF58Ve"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
+  <a href="https://github.com/ishandutta2007/Awesome-Mission-Critical-Cloud-Data-Security/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/Awesome-Mission-Critical-Cloud-Data-Security?style=flat-square&logo=github&color=gold" alt="GitHub Stars" /></a>
+  <a href="https://github.com/ishandutta2007/Awesome-Mission-Critical-Cloud-Data-Security/network/members"><img src="https://img.shields.io/github/forks/ishandutta2007/Awesome-Mission-Critical-Cloud-Data-Security?style=flat-square&logo=github&color=blue" alt="GitHub Forks" /></a>
+  <a href="https://github.com/ishandutta2007/Awesome-Mission-Critical-Cloud-Data-Security/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ishandutta2007/Awesome-Mission-Critical-Cloud-Data-Security?style=flat-square&color=green" alt="License" /></a>
+  <a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
+</p>
 
 ---
 
+## 📑 Top Mission-Critical Cloud Data Security Ecosystem
 
+> A curated directory of **Enterprise SaaS Platforms** and production-grade **Open-Source Security Tools** for mission-critical cloud data security, secrets management, key management services (KMS), Privileged Access Management (PAM), Cloud Security Posture Management (CSPM), and Data Security Posture Management (DSPM).
 
-**Made for security architects, platform engineers, and organizations protecting mission-critical cloud data.**  
+**Curated List of SaaS Products & Open-Source GitHub Projects**  
+*Focused on Secrets Management, Privileged Access, Cryptographic Vaults, & Self-Hosted Cloud Security Posture*  
+**Last updated: November 2026**
 
-Let's make cloud data security more open, but with clear eyes about the integrated compliance and enterprise PAM gaps that commercial platforms still fill.
+---
+
+### 🌐 Sector Overview & Market Dynamics
+
+The global cloud data security and governance market is estimated at **$6.2 billion in 2024–2025 and is projected to expand to over $14.8 billion by 2030** (growing at an estimated 18.5% CAGR), accelerated by stringent AI data privacy mandates (EU AI Act), zero-standing-privilege initiatives, and multi-cloud secrets sprawl. The sector displays **moderate-to-high fragmentation across specialized defense layers**—hyperscalers and platform giants dominate foundational key infrastructure (AWS KMS, Snowflake, CyberArk), while agile pure-plays and open-source champions capture rapid momentum in DSPM, automated GRC compliance, and developer-friendly secrets workflows rather than yielding a single winner-take-all monopoly.
+
+---
+
+### 🔎 Quick Navigation
+
+- [Sector Overview & Market Dynamics](#-sector-overview--market-dynamics)
+- [Enterprise SaaS & Cloud Platforms](#-enterprise-saas--cloud-platforms)
+- [Open-Source GitHub Projects](#-open-source-github-projects)
+  - [Ranked Open-Source Projects](#-ranked-open-source-projects-by-stars)
+  - [Detailed Open-Source Profiles by Category](#-detailed-open-source-profiles-by-category)
+- [How to Contribute](#-how-to-contribute)
+- [Support & Community](#-support--community)
+- [Star History](#-star-history)
+- [Disclaimer & Best Practices](#-disclaimer--best-practices)
+
+---
+
+## 🏢 Enterprise SaaS & Cloud Platforms
+
+The table below benchmarks the top commercial cloud data security platforms protecting mission-critical workloads, encryption keys, identities, and cloud infrastructures.
+
+> Products are sorted in descending order by **Company Size / Valuation / Revenue**.
+
+| Product | Size / Valuation / Revenue | Starting Pricing | Free Tier / Trial Limits | Core Focus & Enterprise Capabilities |
+| :--- | :--- | :--- | :--- | :--- |
+| **[AWS Key Management Service (KMS)](https://aws.amazon.com/kms/)** | **~$2.1T Market Cap** (Amazon parent; AWS >$105B annual run rate) | **$1.00 / key / month** ($0.03 per 10,000 API requests beyond free tier) | **Always-Free Tier**: 20,000 free cryptographic API requests per month forever across all regions. | Fully managed cryptographic key service integrating hardware security modules (FIPS 140-2/3), CloudTrail audit logging, and envelope encryption across 100+ AWS services. |
+| **[Snowflake Business Critical Edition](https://www.snowflake.com/)** | **~$45B Market Cap** ($3.5B+ ARR) | **~$4.00 / credit** (~2x Standard credit rate of $2.00/hr/credit under consumption models) | **30-day free trial** with **$400 in free usage credits** for exploratory workloads. | Top-tier cloud data warehouse environment featuring **Tri-Secret Secure** (composite master keys), HIPAA/PCI-DSS compliance, and AWS PrivateLink / Azure Private Link isolation. |
+| **[CyberArk Privileged Cloud](https://www.cyberark.com/)** | **~$13B Market Cap** ($850M+ ARR) | **~$10.00 / user / month** (Starting tier for Workforce Identity & basic credential vaulting; enterprise PAM packages scale higher) | **30-day enterprise proof-of-concept / guided trial** with full vault features for up to 25 target systems. | Gold-standard enterprise Privileged Access Management (PAM) delivering automated credential rotation, session isolation, zero standing privilege, and audit recordings. |
+| **[Imperva Data Security](https://www.imperva.com/)** | **$3.6B Acquisition** (Acquired by Thales Group; Thales market cap ~$35B) | **~$1,500 / month** (Starting base package for database security fabric & monitoring) | **30-day full-featured enterprise trial** with coverage for up to 10 database instances. | Deep database activity monitoring (DAM), discovery, classification, user rights management, and risk analytics across hybrid cloud database clusters. |
+| **[OneTrust](https://www.onetrust.com/)** | **$4.5B Valuation** ($400M+ ARR; private) | **$50.00 / module / month** (Starting tier for individual assessment and privacy automation modules) | **14-day free trial** with access to privacy assessments, cookie compliance, and consent modules. | Unified Trust Intelligence platform consolidating privacy management, vendor risk management, data discovery, AI governance, and automated GRC audits for 14,000+ organizations. |
+| **[HashiCorp Vault Cloud (HCP Vault)](https://www.hashicorp.com/)** | **$35B Parent Cap** ($6.4B acquisition by IBM; HCP Vault >$600M HashiCorp ARR) | **$0.03 / hour** (~$21.60 / month base for HCP Vault Starter tier) | **Always-Free HCP tier** (HCP Vault Community tier with up to 10,000 active client tokens forever) or $50 trial credit. | Cloud-native secrets lifecycle orchestration, dynamic database credential issuance, TLS certificate management, and transit encryption-as-a-service. |
+| **[Vanta](https://www.vanta.com/)** | **$2.45B Valuation** ($150M+ ARR; private) | **$7,500 / year** (~$625 / month entry tier for SOC 2 core automation for early startups) | **14-day guided proof-of-concept / sandbox trial** with continuous test engine integrations. | Continuous automated compliance and trust management platform with 300+ integrations mapping automated evidence to SOC 2, ISO 27001, HIPAA, and GDPR. |
+| **[Drata](https://drata.com/)** | **$2.0B Valuation** ($100M+ ARR; private) | **$7,500 / year** (~$625 / month base tier for SOC 2 compliance readiness) | **14-day interactive demo sandbox trial** with auditor-approved evidence collection modules. | Next-generation compliance automation engine providing continuous control monitoring, real-time posture risk dashboards, and streamlined external auditor workflows. |
+| **[BigID](https://bigid.com/)** | **$1.25B Valuation** ($100M+ ARR; private) | **$10,000 / year** (~$833 / month entry tier for cloud data discovery & classification) | **14-day guided cloud data discovery trial** scanning up to 1TB of test cloud storage. | Data security posture management (DSPM) and data intelligence platform applying ML classifiers to discover, catalog, and secure sensitive PII/IP across petabyte-scale data lakes. |
+| **[TrustArc](https://trustarc.com/)** | **~$350M Valuation** (Private equity backed by Bregal Sagemount) | **$350 / month** (Entry Privacy Central / individual compliance assessment module) | **14-day enterprise trial** with full template library and regulatory assessment workflows. | Comprehensive global privacy compliance platform offering privacy impact assessments (PIA), records of processing activities (ROPA), and multi-jurisdictional risk tracking. |
+
+---
+
+## 💻 Open-Source GitHub Projects
+
+Open-source tooling enables security engineers to build sovereign, zero-trust cloud data architectures without vendor lock-in. Below are the top production-ready repositories ranked by GitHub stars.
+
+### 🌟 Ranked Open-Source Projects (by Stars)
+
+| Repository | GitHub Stars | License | Primary Category | Core Architecture & Highlights |
+| :--- | :--- | :--- | :--- | :--- |
+| **[Trivy](https://github.com/aquasecurity/trivy)** | [![GitHub stars](https://img.shields.io/github/stars/aquasecurity/trivy?style=social&color=white)](https://github.com/aquasecurity/trivy/stargazers) | Apache-2.0 | CSPM / Vulnerability Scanner | Comprehensive multi-cloud security scanner covering container images, filesystems, Git repos, AWS/K8s misconfigurations, and cloud data leaks. |
+| **[HashiCorp Vault](https://github.com/hashicorp/vault)** | [![GitHub stars](https://img.shields.io/github/stars/hashicorp/vault?style=social&color=white)](https://github.com/hashicorp/vault/stargazers) | BSL-1.1 / MPL-2.0 | Secrets Management / KMS | The enterprise benchmark for identity-based secrets management, cryptographic key storage, leasing, dynamic database credentials, and PKI. |
+| **[JumpServer](https://github.com/jumpserver/jumpserver)** | [![GitHub stars](https://img.shields.io/github/stars/jumpserver/jumpserver?style=social&color=white)](https://github.com/jumpserver/jumpserver/stargazers) | GPL-3.0 | Privileged Access Management | Leading open-source PAM bastion platform delivering web-based SSH, RDP, Kubernetes, and database bastion access with session recording. |
+| **[Infisical](https://github.com/Infisical/infisical)** | [![GitHub stars](https://img.shields.io/github/stars/Infisical/infisical?style=social&color=white)](https://github.com/Infisical/infisical/stargazers) | MIT / AGPL-3.0 | Secrets Management Platform | Developer-first, end-to-end encrypted platform to manage environment variables, API keys, certificates, and infrastructure secrets at scale. |
+| **[Teleport](https://github.com/gravitational/teleport)** | [![GitHub stars](https://img.shields.io/github/stars/gravitational/teleport?style=social&color=white)](https://github.com/gravitational/teleport/stargazers) | AGPL-3.0 | Zero-Trust PAM & Identity | Identity-aware, zero-trust access plane for SSH servers, Kubernetes clusters, web applications, and mission-critical databases with cryptographic identity. |
+| **[Prowler](https://github.com/prowler-cloud/prowler)** | [![GitHub stars](https://img.shields.io/github/stars/prowler-cloud/prowler?style=social&color=white)](https://github.com/prowler-cloud/prowler/stargazers) | Apache-2.0 | CSPM & Compliance | Multi-cloud security assessment tool for AWS, Azure, GCP, and Kubernetes following CIS benchmarks, SOC 2, HIPAA, and GDPR security best practices. |
+| **[Open Policy Agent (OPA)](https://github.com/open-policy-agent/opa)** | [![GitHub stars](https://img.shields.io/github/stars/open-policy-agent/opa?style=social&color=white)](https://github.com/open-policy-agent/opa/stargazers) | Apache-2.0 | Policy-as-Code / CIEM | CNCF graduated policy engine providing unified, context-aware policy enforcement across microservices, Kubernetes, cloud data authorization, and CI/CD. |
+| **[Cloud Custodian](https://github.com/cloud-custodian/cloud-custodian)** | [![GitHub stars](https://img.shields.io/github/stars/cloud-custodian/cloud-custodian?style=social&color=white)](https://github.com/cloud-custodian/cloud-custodian/stargazers) | Apache-2.0 | Cloud Governance & Remediation | Rules engine for cloud resource management, automated real-time compliance enforcement, encryption auditing, and cost optimization. |
+| **[DefectDojo](https://github.com/DefectDojo/django-DefectDojo)** | [![GitHub stars](https://img.shields.io/github/stars/DefectDojo/django-DefectDojo?style=social&color=white)](https://github.com/DefectDojo/django-DefectDojo/stargazers) | BSD-3-Clause | DevSecOps & Posture Management | Open-source DevSecOps orchestration, vulnerability management, and correlation platform consolidating reports across 150+ security tools. |
+| **[Comply](https://github.com/strongdm/comply)** | [![GitHub stars](https://img.shields.io/github/stars/strongdm/comply?style=social&color=white)](https://github.com/strongdm/comply/stargazers) | Apache-2.0 | Compliance-as-Code | SOC 2 focused compliance automation framework that manages governance policies, ticketing workflows, and auditor evidence directly via Git. |
+| **[Thand Agent](https://github.com/thand-io/agent)** | [![GitHub stars](https://img.shields.io/github/stars/thand-io/agent?style=social&color=white)](https://github.com/thand-io/agent/stargazers) | BSL-1.1 | Just-in-Time PAM | Distributed agent enforcing zero standing privileges and just-in-time (JIT) access to cloud infrastructure and internal APIs using Temporal workflows. |
+| **[Poirot DSPM](https://github.com/safernandez666/poirot-public)** | [![GitHub stars](https://img.shields.io/github/stars/safernandez666/poirot-public?style=social&color=white)](https://github.com/safernandez666/poirot-public/stargazers) | GPL-3.0 | Data Security Posture (DSPM) | Scanner detecting exposed PII and secrets across MySQL, AWS S3, Apache Kafka, and Google Drive with native TheHive incident response integration. |
+| **[Secrets](https://github.com/allisson/secrets)** | [![GitHub stars](https://img.shields.io/github/stars/allisson/secrets?style=social&color=white)](https://github.com/allisson/secrets/stargazers) | MIT | Lightweight Secrets Manager | Go-based secrets manager with envelope encryption, multi-cloud KMS backends, tokenization APIs, and tamper-proof HMAC-SHA256 signed audit trails. |
+| **[kvlt](https://github.com/retr0h/kvlt)** | [![GitHub stars](https://img.shields.io/github/stars/retr0h/kvlt?style=social&color=white)](https://github.com/retr0h/kvlt/stargazers) | MIT | Local-First Developer Vault | Zero-daemon CLI secrets manager encrypting payloads with `age` via local SSH agent and hardware keys (Touch ID/YubiKey). |
+| **[Mantissa Stance](https://github.com/mantissa-labs/stance)** | [![GitHub stars](https://img.shields.io/badge/GitHub-stance-lightgrey?style=social&color=white)](https://github.com/mantissa-labs/stance) | AGPL-3.0 | Multi-Cloud CSPM / DSPM / CIEM | Agentless multi-cloud posture scanner with 300+ YAML security policies, identity over-privilege analysis, and deterministic attack path discovery. |
+
+---
+
+### 📂 Detailed Open-Source Profiles by Category
+
+#### 1. Secrets Management & Key Protection (KMS / Vault Alternatives)
+- **[HashiCorp Vault](https://github.com/hashicorp/vault)**: The gold standard for secrets management. Provides token-based auth, dynamic database secrets with automated lease renewal, cryptographic transit operations, and audit device verification.
+- **[Infisical](https://github.com/Infisical/infisical)**: Modern developer-first secret platform. Delivers automated synchronization across CI/CD pipelines, Kubernetes operators, multi-cloud KMS integration, and self-hosted high availability.
+- **[Secrets](https://github.com/allisson/secrets)**: Lightweight Go-based daemon featuring three-tier envelope encryption (Master Key → KEK → DEK), hardware KMS envelope wrapping (AWS KMS, GCP KMS, Azure Vault), and PCI-DSS 10.2.2-compliant signed audit logs.
+- **[kvlt](https://github.com/retr0h/kvlt)**: Single-binary CLI secrets manager storing credentials using SSH keys (`age` encryption). Avoids background daemons by delegating decryption exclusively to memory state in `ssh-agent`.
+
+#### 2. Privileged Access Management (PAM) & Zero-Trust Access
+- **[JumpServer](https://github.com/jumpserver/jumpserver)**: Full-featured bastion cluster providing web terminal access (Luna/Lina), character protocol filtering (KoKo), and database proxying (Chen) with MFA enforcement and forensic session video replays.
+- **[Teleport](https://github.com/gravitational/teleport)**: Zero-trust access plane providing certificate-based ephemeral access to SSH nodes, Kubernetes API endpoints, Postgres/MySQL clusters, and internal web applications without static passwords.
+- **[Thand Agent](https://github.com/thand-io/agent)**: Zero standing privilege controller powered by Temporal workflows for deterministic JIT privilege elevation and automated revocation across cloud IAM and infrastructure.
+
+#### 3. Cloud Security Posture Management (CSPM, DSPM & CIEM)
+- **[Trivy](https://github.com/aquasecurity/trivy)**: Comprehensive vulnerability and posture scanner inspecting infrastructure-as-code (Terraform, CloudFormation), AWS accounts, Kubernetes clusters, and container images for sensitive leaks.
+- **[Prowler](https://github.com/prowler-cloud/prowler)**: Industry-standard security assessment and continuous monitoring tool executing 350+ compliance checks against AWS, GCP, Azure, and Kubernetes.
+- **[Poirot DSPM](https://github.com/safernandez666/poirot-public)**: Focused data discovery tool that indexes relational databases, object storage buckets (S3), and Kafka streams to detect unsecured PII, credit cards, and API secrets.
+- **[Mantissa Stance](https://github.com/mantissa-labs/stance)**: Tri-pillar security posture engine combining CSPM, DSPM, and CIEM with attack-path blast radius calculations and AI-assisted query synthesis.
+
+#### 4. Compliance Automation, Sanitization & Privacy
+- **[Cloud Custodian](https://github.com/cloud-custodian/cloud-custodian)**: Lightweight Python DSL rules engine automating real-time cloud resource compliance, automatic tag enforcement, and unencrypted data remediation.
+- **[Comply](https://github.com/strongdm/comply)**: Git-driven SOC 2 compliance management system orchestrating policy reviews, procedure changes, and auditor evidence generation via markdown workflows.
+- **[CloakDB](https://pypi.org/project/cloakdb/)**: Database anonymization utility with strict $O(1)$ memory requirements, format-preserving encryption (FF1/FF3-1), and HMAC-signed compliance audit logs for petabyte-scale test data generation.
+- **[SDSA (Secure Data Sanitization App)](https://pypi.org/project/sdsa/)**: Tabular data sanitization utility enforcing $k$-anonymity, differential privacy noise, and deterministic tokenization on exported analytical datasets.
+
+---
+
+## 🤝 How to Contribute
+
+Contributions are warmly welcomed! Help maintain this ecosystem directory by following these guidelines:
+
+1. 🍴 **Fork** this repository.
+2. 🌿 **Create** a branch: `git checkout -b feature/add-security-tool`.
+3. 📝 **Add/edit** entries in `README.md` following the standardized table structure (ensure explicit starting prices and verified free tier limits are provided).
+4. 🔗 **Include**: Tool name, official URL, pricing tier details, company valuation or GitHub star count, and a factual summary.
+5. 🚀 **Submit** a Pull Request with a brief explanation of the tool's relevance to cloud data security.
+
+---
+
+## 💖 Support & Community
+
+If this curated security ecosystem helps benchmark your security architecture or streamline your compliance audits:
+
+- ⭐ **Star** this repository on GitHub to support discoverability.
+- 🍴 **Fork** and share the guide with security architects, DevSecOps leads, and cloud platform engineers.
+- 💬 **Join the community**: Connect on [Discord](https://discord.gg/jc4xtF58Ve) to discuss secrets architecture, zero trust, and DSPM implementation patterns.
+- ☕ **Sponsor the Maintainer**: Support continuous research and open-source documentation via the [GitHub Sponsors Dashboard](https://github.com/sponsors/ishandutta2007).
+
+---
+
+## 📈 Star History
+
+[![Star History Chart](https://star-history.dera.page/svg?repos=ishandutta2007/Awesome-Mission-Critical-Cloud-Data-Security&type=date&legend=top-left)](https://star-history.dera.page/#ishandutta2007/Awesome-Mission-Critical-Cloud-Data-Security&type=date&legend=top-left)
+
+---
+
+## ⚠️ Disclaimer & Best Practices
+
+- This list is **community-curated** for architectural research and education — inclusion does not represent an endorsement.
+- Mission-critical data security systems handling customer master keys, privileged credentials, and regulated data must comply with relevant legal frameworks (PCI-DSS v4.0, HIPAA, SOC 2 Type II, ISO/IEC 27001, GDPR).
+- **Self-hosted and open-source architectures place full operational responsibility on the deployer**—including high availability, cryptographic key backups, hardware security module (HSM) attestation, and disaster recovery.
+- Verify license models before commercial implementation (e.g., Apache-2.0, MIT vs. BSL 1.1 or AGPL-3.0).
+
+---
+
+<p align="center">
+  <b>Built with 🛡️ for cloud security architects, DevSecOps practitioners, and CISOs safeguarding mission-critical data.</b><br/>
+  <i>Let's keep cloud data architectures resilient, transparent, and defensible.</i>
+</p>

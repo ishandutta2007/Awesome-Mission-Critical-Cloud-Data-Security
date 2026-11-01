@@ -131,14 +131,16 @@ Contributions are warmly welcomed! Help maintain this ecosystem directory by fol
 
 ---
 
-## 💖 Support & Community
+## 💖 Support & Sponsorship
 
-If this curated security ecosystem helps benchmark your security architecture or streamline your compliance audits:
+If this curated security ecosystem helps benchmark your security architecture, evaluate tools, or streamline your compliance audits, thank you! Your support keeps this project active and continuously updated:
 
-- ⭐ **Star** this repository on GitHub to support discoverability.
+- ⭐ **Star** this repository on GitHub to boost its discoverability for the security community.
 - 🍴 **Fork** and share the guide with security architects, DevSecOps leads, and cloud platform engineers.
 - 💬 **Join the community**: Connect on [Discord](https://discord.gg/jc4xtF58Ve) to discuss secrets architecture, zero trust, and DSPM implementation patterns.
-- ☕ **Sponsor the Maintainer**: Support continuous research and open-source documentation via the [GitHub Sponsors Dashboard](https://github.com/sponsors/ishandutta2007).
+- ☕ **Buy a coffee & sponsor**: You can support ongoing maintenance, research, and open-source documentation via the [Sponsor Dashboard](https://github.com/sponsors/ishandutta2007).
+
+Thank you for your generous encouragement and support! 🙏
 
 ---
 

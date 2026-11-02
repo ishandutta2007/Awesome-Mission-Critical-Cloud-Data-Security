@@ -126,7 +126,7 @@ Contributions are warmly welcomed! Help maintain this ecosystem directory by fol
 1. 🍴 **Fork** this repository.
 2. 🌿 **Create** a branch: `git checkout -b feature/add-security-tool`.
 3. 📝 **Add/edit** entries in `README.md` following the standardized table structure (ensure explicit starting prices and verified free tier limits are provided).
-4. 🔗 **Include**: Tool name, official URL, pricing tier details, company valuation or GitHub Stars_Count, and a factual summary.
+4. 🔗 **Include**: Tool name, official URL, pricing tier details, company valuation or GitHub_Stars_Count, and a factual summary.
 5. 🚀 **Submit** a Pull Request with a brief explanation of the tool's relevance to cloud data security.
 
 ---
